@@ -2,13 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const solc = require('solc');
 
-const inboxPath = path.resolve(__dirname, 'contracts', 'Inbox.sol')  // generates path to Inbox.sol file
-const source = fs.readFileSync(inboxPath, 'utf8'); // reads the source code from the inbox.sol file
+const lotteryPath = path.resolve(__dirname, 'contracts', 'Lottery.sol')  // generates path to Lottery.sol file
+const source = fs.readFileSync(lotteryPath, 'utf8'); // reads the source code from the Lottery.sol file
 
 const input = {
     language: 'Solidity',
     sources: {
-      'Inbox.sol': {
+      'Lottery.sol': {
         content: source,
       },
     },
@@ -21,5 +21,10 @@ const input = {
     },
   };
 
+  const { abi: interface, evm: { bytecode: { object } } } = JSON.parse(solc.compile(JSON.stringify(input))).contracts['Lottery.sol'].Lottery; 
+  console.log(interface);
 
-  module.exports = JSON.parse(solc.compile(JSON.stringify(input))).contracts['Inbox.sol'].Inbox;   // solidity compiler compiles from source code from the number of different contracts
+  module.exports = { interface, object }; // object is the actual name of the bytecode
+
+ // module.exports = JSON.parse(solc.compile(JSON.stringify(input))).contracts['Lottery.sol'].Lottery;  
+  // solidity compiler compiles from source code from the number of different contracts
