@@ -21,10 +21,8 @@ const input = {
     },
   };
 
+   // solidity compiler compiles from source code from the number of different contracts
   const { abi: interface, evm: { bytecode: { object } } } = JSON.parse(solc.compile(JSON.stringify(input))).contracts['Lottery.sol'].Lottery; 
-  console.log(interface);
 
   module.exports = { interface, object }; // object is the actual name of the bytecode
-
- // module.exports = JSON.parse(solc.compile(JSON.stringify(input))).contracts['Lottery.sol'].Lottery;  
-  // solidity compiler compiles from source code from the number of different contracts
+ 
